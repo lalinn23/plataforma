@@ -16,6 +16,8 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
+from django.urls import path
+from users.api.views import RegisterView, LoginView
 from clientesApp.api.router import router_clientes
 from proyectosApp.api.router import router_proyecto
 from fasesApp.api.router import router_fases
@@ -25,7 +27,8 @@ from actividadesApp.api.router import router_actividad
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('api/', include('users.api.router')),
+    path('register/', RegisterView.as_view(), name='register'),
+    path('login/', LoginView.as_view(), name='login'),
     path('api/cliente/', include(router_clientes.urls)),
     path('api/proyecto/', include(router_proyecto.urls)),
     path('api/fase/', include(router_fases.urls)),
