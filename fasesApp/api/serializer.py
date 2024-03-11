@@ -5,4 +5,4 @@ from fasesApp.models import Fases
 class FaseSerializer(serializers.ModelSerializer):
     class Meta:
         model = Fases
-        fields = ['nombreF', 'created_at']
+        fields = ['id','nombreF']

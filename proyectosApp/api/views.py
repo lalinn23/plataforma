@@ -6,5 +6,5 @@ from proyectosApp.api.permission import IsAdminOrReadOnly
 
 class ProyectoApiViewSet(ModelViewSet):
     #permission_classes = [IsAdminOrReadOnly] #permisos
+    queryset = Proyecto.objects.all()
     serializer_class = ProyectoSerializer
-    queryset = Proyecto.objects.filter(published=True)

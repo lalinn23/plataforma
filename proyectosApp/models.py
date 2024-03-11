@@ -5,8 +5,6 @@ from clientesApp.models import Clientes
 
 class Proyecto(models.Model):
     nombreP = models.CharField(max_length=255)
-    created_at = models.DateTimeField(auto_now_add=True)
-    published = models.BooleanField(default=False)
     cliente = models.ForeignKey(Clientes, on_delete=SET_NULL, null=True)
 
 

@@ -9,5 +9,5 @@ from clientesApp.api.permission import IsAdminOrReadOnly
 class ClientesApiViewSet(ModelViewSet):
    # permission_classes = [IsAdminOrReadOnly] # permiso
     serializer_class = ClientesSerializers
-    #queryset = Clientes.objects.all()
-    queryset = Clientes.objects.filter(published=True) # filtrado por true
+    queryset = Clientes.objects.all()
+    #queryset = Clientes.objects.filter(published=True) # filtrado por true

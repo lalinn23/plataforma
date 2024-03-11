@@ -30,7 +30,8 @@ urlpatterns = [
     path('register/', RegisterView.as_view(), name='register'),
     path('login/', LoginView.as_view(), name='login'),
     path('api/cliente/', include(router_clientes.urls)),
-    path('api/proyecto/', include(router_proyecto.urls)),
+    #path('api/proyecto/', include(router_proyecto.urls)),
+    path('', include(router_proyecto.urls)),
     path('api/fase/', include(router_fases.urls)),
     path('api/etapa/', include(router_etapa.urls)),
     path('api/actividad/', include(router_actividad.urls))

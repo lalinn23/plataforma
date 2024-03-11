@@ -5,4 +5,4 @@ from etapasApp.models import Etapa
 class EtapaSerializer(serializers.ModelSerializer):
     class Meta:
         model = Etapa
-        fields = ['id', 'nombreE', 'created_at']
+        fields = ['id', 'nombreE']

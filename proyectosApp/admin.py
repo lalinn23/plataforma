@@ -6,4 +6,4 @@ from proyectosApp.models import Proyecto
 
 @admin.register(Proyecto)
 class ProyectoAdmin(admin.ModelAdmin):
-    list_display = ['nombreP', 'published', 'created_at', 'cliente']
+    list_display = ['nombreP','cliente']
