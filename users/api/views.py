@@ -2,9 +2,15 @@ from django.contrib.auth import authenticate
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
+from users.api.serializers import UserRegisterSerializer,  UserLoginSerializer, UserSerializer
 from users.models import User
-from users.api.serializers import UserRegisterSerializer, UserLoginSerializer
-from rest_framework.permissions import IsAuthenticated
+
+
+class UsersListView(APIView):
+    def get(self, request):
+        user = User.objects.all()
+        serializer = UserSerializer(user, many=True)
+        return Response(serializer.data, status=status.HTTP_200_OK)
 
 
 class RegisterView(APIView):
@@ -18,14 +24,32 @@ class RegisterView(APIView):
 
 class LoginView(APIView):
     def post(self, request):
-        serializer = UserLoginSerializer(data=request.data)
-        if serializer.is_valid():
-            email = serializer.validated_data['email']
-            password = serializer.validated_data['password']
-            user = authenticate(request, username=email, password=password)
-            if user:
+        try:
+            #validar campos
+            if 'email' not in request.data:
+                return Response({'message': 'El correo es requerido.'}, status=status.HTTP_401_UNAUTHORIZED)
+
+            if 'password' not in request.data:
+                return Response({'message': 'La contraseña es requerida.'}, status=status.HTTP_401_UNAUTHORIZED)
+
+            email = request.data.get('email')
+            password = request.data.get('password', None)
+
+            #Validar si el usuarioe existe
+            user_exist = User.objects.filter(email=email)
+            if len(user_exist) == 0 or None:
+                return Response({'message': 'El correo proporcionado no existe.'}, status=status.HTTP_401_UNAUTHORIZED)
+
+            #autenticar el usuario
+            user = authenticate(request, username=user_exist.get().username, password=password)
+            if user is not None:
+                if not user_exist.get().is_active:
+                    return Response({'message': 'La contraseña es requerida.'}, status=status.HTTP_401_UNAUTHORIZED)
+
                 return Response({'message': 'Login successful'}, status=status.HTTP_200_OK)
             else:
                 return Response({'message': 'credenciales invalidas'}, status=status.HTTP_401_UNAUTHORIZED)
-            # noinspection PyUnreachableCode
-            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+        except Exception as e:
+            print(e)
+            return Response({'msg': 'Error en el servicio', 'ex': e.__str__()}, status=status.HTTP_400_BAD_REQUEST)
+

@@ -9,7 +9,7 @@ from etapasApp.models import Etapa
 class Actividad(models.Model):
     lider = models.ForeignKey(User, on_delete=SET_NULL, null=True)
     user = models.CharField(max_length=255)
-    created_at = models.DateTimeField(auto_now_add=True)
+    created_at = models.DateField(auto_now_add=True)
     proyecto = models.ForeignKey(Proyecto, on_delete=SET_NULL, null=True)
     actividad = models.CharField(max_length=255)
     fase = models.ForeignKey(Fases, on_delete=SET_NULL, null=True)
