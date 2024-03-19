@@ -15,14 +15,14 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.contrib import admin
-from django.urls import path, include
+from django.urls import include
 from django.urls import path
-from users.api.views import RegisterView, LoginView, UsersListView
+from users.api.views import RegisterView, LoginView, UsersListView, UserDetailView
 from clientesApp.api.router import router_clientes
-from proyectosApp.api.router import router_proyecto
+from proyectosApp.api.router import urlpatterns as proyectos_urls
 from fasesApp.api.router import router_fases
 from etapasApp.api.router import router_etapa
-from actividadesApp.api.router import router_actividad
+from actividadesApp.api.router import urlpatterns as actividad_urls
 
 
 urlpatterns = [
@@ -30,11 +30,11 @@ urlpatterns = [
     path('register/', RegisterView.as_view(), name='register'),
     path('login/', LoginView.as_view(), name='login'),
     path('users/', UsersListView.as_view(), name='users-list'),
+    path('users/<int:pk>/', UserDetailView.as_view(), name='user-detail'),
     path('api/cliente/', include(router_clientes.urls)),
-    #path('api/proyecto/', include(router_proyecto.urls)),
-    path('', include(router_proyecto.urls)),
+    path('api/',include(proyectos_urls)),  # Importa las URLs de proyectosApp
     path('api/fase/', include(router_fases.urls)),
     path('api/etapa/', include(router_etapa.urls)),
-    path('api/actividad/', include(router_actividad.urls))
+    path('api/', include(actividad_urls))
 
 ]

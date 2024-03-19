@@ -1,9 +1,9 @@
-from rest_framework.routers import DefaultRouter
-from proyectosApp.api.views import ProyectoApiViewSet
+from django.urls import path
+from . import views
+from .views import ProyectoListCreate, ProyectoDetail
 
+urlpatterns = [
+    path('proyectos/', ProyectoListCreate.as_view(), name='proyecto-list-create'),
+    path('proyectos/<int:pk>/', ProyectoDetail.as_view(), name='proyecto-detail'),
 
-router_proyecto = DefaultRouter()
-
-#router_proyecto.register(prefix='proyecto', basename='proyecto', viewset=ProyectoApiViewSet)
-
-router_proyecto.register(r'proyectos' ,ProyectoApiViewSet)
+]

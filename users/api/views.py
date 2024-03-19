@@ -13,6 +13,16 @@ class UsersListView(APIView):
         return Response(serializer.data, status=status.HTTP_200_OK)
 
 
+class UserDetailView(APIView):
+    def delete(self, request, pk):
+        try:
+            user = User.objects.get(pk=pk)
+        except User.DoesNotExist:
+            return Response({'message': 'El usuario no existe'}, status=status.HTTP_404_NOT_FOUND)
+
+        user.delete()
+        return Response({'message': 'Usuario eliminado exitosamente'}, status=status.HTTP_204_NO_CONTENT)
+
 class RegisterView(APIView):
     def post(self, request):
         serializer = UserRegisterSerializer(data=request.data)

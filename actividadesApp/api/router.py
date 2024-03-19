@@ -1,7 +1,7 @@
-from rest_framework.routers import DefaultRouter
-from actividadesApp.api.views import ActividadApiViewSet
+from django.urls import path
+from .views import ActividadListCreate, ActividadDetail
 
-
-router_actividad = DefaultRouter()
-
-router_actividad.register(prefix='actividad', basename='actividad', viewset=ActividadApiViewSet)
+urlpatterns = [
+    path('actividad/', ActividadListCreate.as_view(), name='actividad-list-create'),
+    path('actividad/<int:pk>/', ActividadDetail.as_view(), name='proyecto-detail'),
+]
