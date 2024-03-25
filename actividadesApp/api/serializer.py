@@ -5,7 +5,7 @@ from actividadesApp.models import Actividad
 class UserSerializer(serializers.ModelSerializer):
     class Meta:
         model = Actividad
-        fields = ['id','first_name']
+        fields = ['id','username']
 
 
 class ProyectoSerializer(serializers.ModelSerializer):
@@ -27,6 +27,7 @@ class EtapaSerializer(serializers.ModelSerializer):
 
 
 class ActividadSerializer(serializers.ModelSerializer):
+    user_id = serializers.IntegerField(write_only=True)
     proyecto_id = serializers.IntegerField(write_only=True)
     fase_id = serializers.IntegerField(write_only=True)
     etapa_id = serializers.IntegerField(write_only=True)
@@ -35,7 +36,7 @@ class ActividadSerializer(serializers.ModelSerializer):
         model = Actividad
         fields = ['id',
                   'lider',
-                  'user',
+                  'user','user_id',
                   'created_at',
                   'proyecto','proyecto_id',
                   'actividad',

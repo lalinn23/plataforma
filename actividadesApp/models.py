@@ -8,7 +8,7 @@ from etapasApp.models import Etapa
 
 class Actividad(models.Model):
     lider = models.CharField(max_length=255)
-    user = models.CharField(max_length=255)
+    user = models.ForeignKey(User, on_delete=models.SET_NULL, null=True)
     created_at = models.DateField(auto_now_add=True)
     proyecto = models.ForeignKey(Proyecto, on_delete=models.SET_NULL, null=True)
     actividad = models.CharField(max_length=255)
