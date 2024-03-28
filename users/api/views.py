@@ -1,4 +1,4 @@
-from django.contrib.auth import authenticate
+from django.contrib.auth import authenticate, logout
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
@@ -63,3 +63,13 @@ class LoginView(APIView):
             print(e)
             return Response({'msg': 'Error en el servicio', 'ex': e.__str__()}, status=status.HTTP_400_BAD_REQUEST)
 
+
+
+class LogoutView(APIView):
+    def post(self, request):
+        try:
+            logout(request)  # Cierra la sesión del usuario
+        except Exception as e:
+            return Response({'message': 'Error al cerrar sesión'}, status=status.HTTP_400_BAD_REQUEST)
+
+        return Response({'message': 'Sesión cerrada exitosamente'}, status=status.HTTP_200_OK)
