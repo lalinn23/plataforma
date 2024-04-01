@@ -1,9 +1,12 @@
 from rest_framework.permissions import BasePermission
+from rest_framework import permissions
+
+# si el usuario no es admin solo podra consultar
+# si es admin realizar crud
 
 
-class IsAdminOrReadOnly(BasePermission):
+class IsAdminOnly(BasePermission):
     def has_permission(self, request, view):
-        if request.method == 'GET':
-            return True
-        else:
-            return request.user.is_staff
+        return request.user and request.user.is_staff
+
+
