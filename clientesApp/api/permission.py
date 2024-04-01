@@ -1,12 +1,12 @@
 from rest_framework.permissions import BasePermission
 from rest_framework import permissions
 
-# si el usuario no es admin solo podra consultar
-# si es admin realizar crud
+class IsAdminOrSuperUser(BasePermission):
+    """
+    Custom permission to only allow admins or superusers to access.
+    """
 
-
-class IsAdminOnly(BasePermission):
     def has_permission(self, request, view):
-        return request.user and request.user.is_staff
-
+        # Solo permitir acceso si el usuario es administrador o superusuario
+        return request.user and (request.user.is_staff or request.user.is_superuser)
 

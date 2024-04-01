@@ -59,12 +59,8 @@ class LoginView(APIView):
                     return Response({'message': 'La cuenta está desactivada.'}, status=status.HTTP_401_UNAUTHORIZED)
 
                 # Obtener el rol del usuario
-                #role = 'admin' if user_exist.is_staff else 'normal'
-                if user_exist.is_staff:
-
-                    return Response({'message': 'Login successful', 'role': 'admin'}, status=status.HTTP_200_OK)
-                else:
-                    return Response({'message': 'Login successful', 'role': 'normal'}, status=status.HTTP_200_OK)
+                role = 'admin' if user_exist.is_staff or user_exist.is_superuser else 'normal'
+                return Response({'message': 'Login successful', 'role': role, 'authenticated': True}, status=status.HTTP_200_OK)
             else:
                 return Response({'message': 'Credenciales inválidas'}, status=status.HTTP_401_UNAUTHORIZED)
         except Exception as e:

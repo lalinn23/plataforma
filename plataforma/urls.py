@@ -17,6 +17,8 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import include
 from django.urls import path
+from django.conf import settings
+from django.conf.urls.static import static
 from users.api.views import RegisterView, LoginView, UsersListView, UserDetailView, LogoutView
 from clientesApp.api.router import router_clientes
 from proyectosApp.api.router import urlpatterns as proyectos_urls
@@ -30,6 +32,7 @@ urlpatterns = [
     path('register/', RegisterView.as_view(), name='register'),
     path('login/', LoginView.as_view(), name='login'),
     path('logout/', LogoutView.as_view(), name='logout'),
+    path('api_authorization/', include('rest_framework.urls')),
     path('users/', UsersListView.as_view(), name='users-list'),
     path('users/<int:pk>/', UserDetailView.as_view(), name='user-detail'),
     path('api/cliente/', include(router_clientes.urls)),
