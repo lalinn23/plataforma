@@ -10,7 +10,9 @@ from rest_framework.filters import OrderingFilter
 class ActividadListCreate(generics.ListCreateAPIView):
     queryset = Actividad.objects.all()
     serializer_class = ActividadSerializer
-    # permission_classes = [IsNotAdmin]  # Asigna el permiso personalizado
+    filter_backends = [OrderingFilter]  # Agregar el filtro de ordenación
+    ordering_fields = ['created_at']
+
 
 
 class ActividadDetail(generics.RetrieveUpdateDestroyAPIView):
