@@ -13,7 +13,7 @@ python -m venv envs
 ```sh
 pip install -r requirements.txt
 ```
-### ejecuta el systema
+### ejecuta el entorno virtual
 
 ```sh
  .\envs\Scripts\activate
